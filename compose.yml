@@ -1,0 +1,37 @@
+services:
+  contenedor1:
+    image: internetsystemsconsortium/bind9:9.20        
+    container_name: proba_bind9
+    restart: always
+    ports: 
+      - "54:54/tcp"
+      - "54:54/udp"
+      - "127.0.0.1:953:953/tcp"
+    networks:
+      red_creada:
+        ipv4_address: 172.16.0.1
+    volumes:
+      - ./config:/home/sandra/SRI/examen/config
+      - ./zonas:/home/sandra/SRI/examen/zonas
+
+  contendor2:
+    container_name: contenedor_alpine
+    image: alpine:latest
+    tty: true
+    stdin_open: true
+    dns:
+      - 172.16.0.1
+    networks:
+      red_creada:
+        ipv4_address: 172.16.0.2
+
+networks:
+  red_creada:
+    driver: bridge
+    name: red_creada
+    ipam:
+      config:
+        - subnet: 172.16.0.0/16
+          ip_range: 172.16.0.0/24
+          gateway: 172.16.0.254
+     

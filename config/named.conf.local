@@ -1,0 +1,4 @@
+zone "tendaelectronica.int" {
+    type master;
+    file "/home/sandra/P7/conf/db.exame.com";
+};
